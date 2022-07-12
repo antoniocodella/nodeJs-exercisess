@@ -1,8 +1,6 @@
 {
   "name": "test-project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "hello.js",
+
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint src/ --cache --fix",
