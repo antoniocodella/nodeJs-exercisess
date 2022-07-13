@@ -9,3 +9,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Fruit {
+  id                Int         @id  @default(autoincrement())
+  nome              String      @db.VarChar(255)
+  genere            String      @db.VarChar(255)
+  famiglia          String      @db.VarChar(255)
+  calorie           Int         
+  carboidrati       Int         
+  grassi            Int         
+  proteine          Int         
+  zuccheri          Int          
+  prezzo            Int         
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
