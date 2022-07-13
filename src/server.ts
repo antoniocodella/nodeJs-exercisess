@@ -1,13 +1,8 @@
-import express from "express";
-import "express-async-errors";
+import "dotenv/config";
 
-const app = express();
+import app from "./app";
 
-app.get("/", (request, response) => {
-    response.send("Stranger Things!");
-});
-
-const port = 3001;
+const port = process.env.PORT;
 
 app.listen(port, () => {
     console.log(`[server]: Server in running at http://localhost${port}!`);
