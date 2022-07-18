@@ -2,12 +2,19 @@ import express from "express";
 import "express-async-errors";
 import prisma from "./lib/prisma/client";
 import cors from "cors";
+import { initMulterMiddleware } from "./lib/middleware/multer";
+
+const upload = initMulterMiddleware();
+
+const corsOptions = {
+    origin: "http://localhost:8080",
+};
 
 const app = express();
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.get("/fruits", async (request, response) => {
     const fruits = await prisma.fruit.findMany();
@@ -64,6 +71,23 @@ app.delete("/fruits/:id(\\d+)", async (request, response, next) => {
         next(`Cannot DELETE /fruits/${fruitId}`);
     }
 });
+
+app.post(
+    "/fruits/:id(\\d+)/photo",
+    upload.single("photo"),
+    async (request, response, next) => {
+        console.log("request.file", request.file);
+
+        if (!request.file) {
+            response.status(400);
+            return next("No photo file uploaded");
+        }
+
+        const photoFilename = request.file.filename;
+
+        response.status(201).json({ photoFilename });
+    }
+);
 
 export default app;
 
