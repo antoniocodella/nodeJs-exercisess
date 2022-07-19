@@ -76,18 +76,29 @@ app.post(
     "/fruits/:id(\\d+)/photo",
     upload.single("photo"),
     async (request, response, next) => {
-        console.log("request.file", request.file);
-
         if (!request.file) {
             response.status(400);
             return next("No photo file uploaded");
         }
 
+        const fruitId = Number(request.params.id);
         const photoFilename = request.file.filename;
 
-        response.status(201).json({ photoFilename });
+        try {
+            await prisma.fruit.update({
+                where: { id: fruitId },
+                data: { photoFilename },
+            });
+        } catch (error) {
+            response.status(404);
+            next(`Cannot POST /fruits/${fruitId}/photo`);
+        }
+
+        // response.status(201).json({ photoFilename });
     }
 );
+
+app.use("/fruits/photos", express.static("uploads"));
 
 export default app;
 
