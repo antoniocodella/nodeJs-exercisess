@@ -20,7 +20,8 @@ model Fruit {
   grassi            Int         
   proteine          Int         
   zuccheri          Int          
-  prezzo            Int         
+  prezzo            Int
+  photoFilename     String?     @db.VarChar(255)
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
 }
