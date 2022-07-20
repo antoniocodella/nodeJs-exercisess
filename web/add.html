@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<body>
+    <form action="http://localhost:3005/fruits" id="form-add">
+        <label>
+            <strong>Name:</strong>
+            <input type="text" name="name">
+        </label>
+        <label>
+            <strong>Genere:</strong>
+            <input type="text" name="genere">
+        </label>
+        <label>
+            <strong>Famiglia:</strong>
+            <input type="text" name="famiglia">
+        </label>
+        <input type="submit" value="Add fruit">
+    </form>
+
+    <script>
+        async function addFruit(event){
+            event.preventDefault();
+
+            const form = event.currentTarget
+
+            const formData = new FormData(form);
+            const plainFormData = Object.fromEntries(formData.entries());
+            const formDataJsonString = JSON.stringify(plainFormData)
+
+            const url = form.action;
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: formDataJsonString
+            })
+
+            const fruit = await response.json()
+
+            console.dir(fruit)
+        }
+
+        const addForm= document.getElementById("form-add")
+
+        addForm.addEventListener("submit", addFruit)
+    </script>
+</body>
+</html>
