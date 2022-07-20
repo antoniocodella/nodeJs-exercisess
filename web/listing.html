@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-
+<html>
     <body>
         <script>
             async function fetchFruits() {
                 const response = await fetch("http://localhost:3005/fruits");
                 const fruits = await response.json();
 
-                console.log( {fruits} );
-
+                console.log({ fruits });
             }
             fetchFruits();
-
         </script>
     </body>
 </html>
-

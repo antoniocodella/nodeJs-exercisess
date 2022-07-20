@@ -42,4 +42,3 @@ export const multerOptions = {
 export const initMulterMiddleware = () => {
     return multer({ storage, ...multerOptions });
 };
-

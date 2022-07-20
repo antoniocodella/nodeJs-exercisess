@@ -101,4 +101,3 @@ app.post(
 app.use("/fruits/photos", express.static("uploads"));
 
 export default app;
-
