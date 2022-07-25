@@ -26,7 +26,7 @@ router.get(
 );
 
 router.get(
-    "/github/callbak",
+    "/github/callback",
     // @ts-ignore
     passport.authenticate("github", {
         failureRedirect: "/auth/github/login",

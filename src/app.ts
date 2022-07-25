@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(initCorsMiddleware());
 
-app.use("/planets", planetsRoutes);
+app.use("/fruits", planetsRoutes);
 
 app.use("/auth", authRoutes);
 
