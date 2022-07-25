@@ -1,6 +1,8 @@
 import express, { Router } from "express";
 
 import prisma from "../lib/prisma/client";
+
+import { checkAuthorization } from "../lib/middleware/passport";
 import { initMulterMiddleware } from "../lib/middleware/multer";
 
 const upload = initMulterMiddleware();
@@ -23,7 +25,7 @@ router.get("/:id(\\d+)", async (request, response) => {
     response.json(fruit);
 });
 
-router.post("/", async (request, response) => {
+router.post("/", checkAuthorization, async (request, response) => {
     const fruitData = request.body;
 
     const fruit = await prisma.fruit.create({ data: fruitData });
@@ -31,40 +33,49 @@ router.post("/", async (request, response) => {
     response.status(201).json(fruit);
 });
 
-router.put("/:id(\\d+)", async (request, response, next) => {
-    const fruitData = request.body;
-    const fruitId = Number(request.params.id);
+router.put(
+    "/:id(\\d+)",
+    checkAuthorization,
+    async (request, response, next) => {
+        const fruitData = request.body;
+        const fruitId = Number(request.params.id);
 
-    try {
-        const fruit = await prisma.fruit.update({
-            where: { id: fruitId },
-            data: fruitData,
-        });
+        try {
+            const fruit = await prisma.fruit.update({
+                where: { id: fruitId },
+                data: fruitData,
+            });
 
-        response.status(200).json(fruit);
-    } catch (error) {
-        response.status(404);
-        next(`Cannot PUT /fruits/${fruitId}`);
+            response.status(200).json(fruit);
+        } catch (error) {
+            response.status(404);
+            next(`Cannot PUT /fruits/${fruitId}`);
+        }
     }
-});
+);
 
-router.delete("/:id(\\d+)", async (request, response, next) => {
-    const fruitId = Number(request.params.id);
+router.delete(
+    "/:id(\\d+)",
+    checkAuthorization,
+    async (request, response, next) => {
+        const fruitId = Number(request.params.id);
 
-    try {
-        await prisma.fruit.delete({
-            where: { id: fruitId },
-        });
+        try {
+            await prisma.fruit.delete({
+                where: { id: fruitId },
+            });
 
-        response.status(200).end();
-    } catch (error) {
-        response.status(404);
-        next(`Cannot DELETE /fruits/${fruitId}`);
+            response.status(200).end();
+        } catch (error) {
+            response.status(404);
+            next(`Cannot DELETE /fruits/${fruitId}`);
+        }
     }
-});
+);
 
 router.post(
     "/:id(\\d+)/photo",
+    checkAuthorization,
     upload.single("photo"),
     async (request, response, next) => {
         if (!request.file) {

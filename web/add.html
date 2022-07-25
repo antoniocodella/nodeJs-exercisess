@@ -1,5 +1,11 @@
 <html>
     <body>
+        <p>
+            <a
+                href="http://localhost:3004/auth/login?redirectTo=http://localhost:8000/add"
+                >LOGIN</a
+            >
+        </p>
         <form action="http://localhost:3004/fruits" id="form-add">
             <label>
                 <strong>Nome:</strong>
@@ -58,6 +64,7 @@
                         "Content-Type": "application/json",
                     },
                     body: formDataJsonString,
+                    credentials: "include",
                 });
 
                 const fruit = await response.json();
