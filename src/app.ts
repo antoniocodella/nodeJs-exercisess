@@ -1,6 +1,6 @@
 import express from "express";
 import "express-async-errors";
-import planetsRoutes from "./routes/planets";
+import fruitsRoutes from "./routes/fruits";
 import { initCorsMiddleware } from "./lib/middleware/cors";
 import { initSessionMiddleware } from "./lib/middleware/session";
 import { passport } from "./lib/middleware/passport";
@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(initCorsMiddleware());
 
-app.use("/fruits", planetsRoutes);
+app.use("/fruits", fruitsRoutes);
 
 app.use("/auth", authRoutes);
 
