@@ -23,5 +23,7 @@ model Fruit {
   prezzo            String
   photoFilename     String?     @db.VarChar(255)
   createdAt         DateTime    @default(now())
+  createdBy         String?     @db.VarChar(255)
   updatedAt         DateTime    @updatedAt
+  updatedBy         String?     @db.VarChar(255)
 }

@@ -27,8 +27,15 @@ router.get("/:id(\\d+)", async (request, response) => {
 
 router.post("/", checkAuthorization, async (request, response) => {
     const fruitData = request.body;
+    const username = request.user?.username as string;
 
-    const fruit = await prisma.fruit.create({ data: fruitData });
+    const fruit = await prisma.fruit.create({
+        data: {
+            ...fruitData,
+            createdBy: username,
+            updatedBy: username,
+        },
+    });
 
     response.status(201).json(fruit);
 });
@@ -39,11 +46,12 @@ router.put(
     async (request, response, next) => {
         const fruitData = request.body;
         const fruitId = Number(request.params.id);
+        const username = request.user?.username as string;
 
         try {
             const fruit = await prisma.fruit.update({
                 where: { id: fruitId },
-                data: fruitData,
+                data: { ...fruitData, updatedBy: username },
             });
 
             response.status(200).json(fruit);
