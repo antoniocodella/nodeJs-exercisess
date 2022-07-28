@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^4.0.0",
     "@sinclair/typebox": "^0.24.20",
     "ajv-formats": "^2.1.1",
     "cli-color": "^2.0.2",
@@ -51,7 +50,6 @@
     "jest-mock-extended": "^2.0.6",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
-    "prisma": "^4.0.0",
     "serve": "^14.0.1",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
